@@ -1,0 +1,20 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata: 
+  name: argocd_deployment
+  namespace: GITOps
+spec:
+  project: default 
+  source: 
+    repoURL: https://github.com/Osiephri/flaskdemo.git
+    targetRevision: HEAD
+    path: ./files
+  destination: 
+    server: https://kubernetes.default.svc
+    namespace: myapp
+  syncPolicy:
+    syncOptions:
+    - createNamespace: true
+    automated:
+      selfHeal: true 
+      prune: true
